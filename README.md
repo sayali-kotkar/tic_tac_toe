@@ -77,7 +77,9 @@ This application  provides you with two endpoints
     ```
 ## Tests
  you can run tests with following command
+ 
  mix test test/tictactoe/tictactoetest.exs
+ 
 ## References
 1. https://medium.com/skyhub-labs/elixir-for-java-developers-episode-i-66b65c862652 
 2. https://www.youtube.com/watch?v=G3JRv2dHU9A&feature=emb_rel_pause
