@@ -10,4 +10,10 @@ defmodule Cell do
   def new(_row, _col) do
     {:error, :invalid_cell}
   end
+
+  defimpl String.Chars do
+    def to_string(%Cell{row: row, col: col}) do
+      "Cell(#{row}, #{col})"
+    end
+  end
 end

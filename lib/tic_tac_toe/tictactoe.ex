@@ -1,7 +1,7 @@
 defmodule TicTacToe do
   def create_new_board do
     # creates map , key --> boardlocaton (Cell), value --> empty
-    for c <- cells(), into: %{}, do: {c, :empty}
+    {:ok, for(c <- cells(), into: %{}, do: {c, :empty})}
   end
 
   def cells do

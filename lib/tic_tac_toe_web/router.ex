@@ -14,11 +14,11 @@ defmodule TicTacToeWeb.Router do
   end
 
   scope "/", TicTacToeWeb do
-    pipe_through :browser
+    pipe_through :api
 
     get "/", TicTacToeController, :index
-    get "/game", TicTacToeController, :createGame
-    get "/game/:game_id/:playerid", TicTacToeController, :make_move
+    post "/game", TicTacToeController, :createGame
+    put "/game/:game_id/", TicTacToeController, :move
   end
 
   # Other scopes may use custom stacks.
