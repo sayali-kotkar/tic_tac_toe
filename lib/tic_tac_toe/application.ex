@@ -14,6 +14,7 @@ defmodule TicTacToe.Application do
       # {TicTacToe.Worker, arg},
     ]
 
+    BoardState.start_link()
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: TicTacToe.Supervisor]

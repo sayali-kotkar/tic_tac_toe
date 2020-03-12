@@ -5,10 +5,10 @@ defmodule TicTacToeWeb.TicTacToeController do
     render(conn, "index.html")
   end
 
-  def createGame(conn, params) do
-    game_id = :rand.uniform(5)
+  def createGame(conn, _params) do
+    game_id = :rand.uniform(75)
 
-    case TicTacToe.create_new_board() do
+    case TicTacToe.create_new_board(game_id) do
       {:ok, board} ->
         conn |> json(format_respone(:create, game_id, board))
 
@@ -20,16 +20,29 @@ defmodule TicTacToeWeb.TicTacToeController do
 
   def move(conn, %{
         "game_id" => game_id,
-        "playerid" => playerid,
-        "move" => %{"row" => row, "column" => column}
+        "player_id" => player_id,
+        "row" => row,
+        "column" => column
       }) do
-    {:ok, move} = GameEngine.Game.move(:game, game_id, %{row: row, column: column})
+    case TicTacToe.movenow(game_id, player_id, row, column) do
+      {:ok, board} ->
+        # json(conn, board)
+        conn |> json(format_respone(:move, game_id, board))
 
-    conn
-    |> json(handle_response(:move, game_id, move))
+      {_, _, board} ->
+        conn |> json(format_respone(:error, game_id, board))
+    end
   end
 
   defp format_respone(:create, game_id, board) do
-    %{game_id: game_id, board: board}
+    %{game_id: game_id, msg: "success", board: board}
+  end
+
+  defp format_respone(:move, game_id, board) do
+    %{game_id: game_id, msg: "success", board: board}
+  end
+
+  defp format_respone(:error, game_id, board) do
+    %{error_message: "error occured", game_id: game_id, board: board}
   end
 end

@@ -1,29 +1,83 @@
 # TicTacToe
 
-To start your Phoenix server:
+ This is the implementation of famous tic tac toe game.
 
-  * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+## Main Technology stack
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+* Elixir
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+* Phoenix
 
-## Learn more
+## Getting up and running:
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.htmlP
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+* Git clone https://github.com/sayali-kotkar/tic_tac_toe
 
+* In a command line, run `mix deps.get` in order to install all required dependencies.
 
-mix test test/tictactoe/tictactoe.exs
-mix phx.server
+* Run `mix phoenix.server` to start the game engine.  Application will now be up and running.
 
+## Summary
 
-Issues faced
+This application  provides you with two endpoints
 
-1. issue when printing json (protocol not implemented)
-2. how to pas board state in 2nd call
+ 1. Start Endpoint - POST http://localhost:4000/game
+
+  This endpoint creates a unique id for the game and creates a empty board to play the game.
+
+   Response
+   ```
+      {
+        "board": {
+        "Cell(1, 1)": "empty",
+        "Cell(2, 1)": "empty",
+        "Cell(3, 1)": "empty",
+        "Cell(1, 2)": "empty",
+        "Cell(2, 2)": "empty",
+        "Cell(3, 2)": "empty",
+        "Cell(1, 3)": "empty",
+        "Cell(2, 3)": "empty",
+        "Cell(3, 3)": "empty"
+        },
+        "game_id": 29,
+        "msg": "success"
+    }
+   ```
+
+  2. Endpoint to make a move - PUT http://localhost:4000/game/{game_id}
+
+   This endpoint is used by a user to make a move on the board
+
+   Request:
+   ```
+     {
+        "player_id": 0,  //this can be 0 or X
+        "row": 1,
+        "column": 1    
+     }
+   ```
+    Response:
+
+    ```
+      {
+        "board": {
+        "Cell(1, 1)": 0,
+        "Cell(2, 1)": "empty",
+        "Cell(3, 1)": "empty",
+        "Cell(1, 2)": "empty",
+        "Cell(2, 2)": "empty",
+        "Cell(3, 2)": "empty",
+        "Cell(1, 3)": "empty",
+        "Cell(2, 3)": "empty",
+        "Cell(3, 3)": "empty"
+        }
+        "msg": "success",
+        "game_id": "71"
+      }
+
+    ```
+##References
+1. https://medium.com/skyhub-labs/elixir-for-java-developers-episode-i-66b65c862652 
+2. https://www.youtube.com/watch?v=G3JRv2dHU9A&feature=emb_rel_pause
+3. https://joyofelixir.com/toc.html 
+4. https://bram209.github.io/2017-08-30-tic-tac-toe-in-phoenix-vue-js/ 
+5. https://github.com/javflores/tic-tac-toe/blob/master/game_engine/README.md

@@ -1,7 +1,9 @@
 defmodule TicTacToe do
-  def create_new_board do
+  def create_new_board(game_id) do
     # creates map , key --> boardlocaton (Cell), value --> empty
-    {:ok, for(c <- cells(), into: %{}, do: {c, :empty})}
+    board = for(c <- cells(), into: %{}, do: {c, :empty})
+    BoardState.add(game_id, board)
+    {:ok, board}
   end
 
   def cells do
@@ -56,14 +58,32 @@ defmodule TicTacToe do
     end
   end
 
+  def movenow(game_id, player_id, row, column) do
+    make_move(
+      game_id,
+      BoardState.get(game_id),
+      Cell.new(row, column),
+      player_id
+    )
+  end
+
   # board format (set of maps , map --> (board_location, player_symbol_move))
   # [{%Cell{row:0 ,col: 0} => :empty}, %Cell{0,1}:empty,  %Square{0,2}:empty}]
-  def make_move(board, cell_location, player) do
+  def make_move(game_id, board, cell_location, player) do
     case board[cell_location] do
-      nil -> {:error, :invalid_location}
-      0 -> {:error, :cell_already_occupied}
-      1 -> {:error, :cell_already_occupied}
-      :empty -> {:ok, %{board | cell_location => player}}
+      nil ->
+        {:error, :invalid_location, board}
+
+      0 ->
+        {:error, :cell_already_occupied, board}
+
+      1 ->
+        {:error, :cell_already_occupied, board}
+
+      :empty ->
+        board = %{board | cell_location => player}
+        BoardState.add(game_id, board)
+        {:ok, board}
     end
   end
 end
