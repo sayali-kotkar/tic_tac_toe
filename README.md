@@ -50,7 +50,7 @@ This application  provides you with two endpoints
    Request:
    ```
      {
-        "player_id": 0,  //this can be 0 or X
+        "player_id": "O",  //this can be O or X
         "row": 1,
         "column": 1    
      }
