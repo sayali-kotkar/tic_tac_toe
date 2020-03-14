@@ -80,6 +80,10 @@ This application  provides you with two endpoints
  
  mix test test/tictactoe/tictactoetest.exs
  
+# Scenarios not covered
+  1. Sequence of the players makiing a move. As of now there is no validation on sequence of turns
+  2. Draw scenario
+ 
 ## References
 1. https://medium.com/skyhub-labs/elixir-for-java-developers-episode-i-66b65c862652 
 2. https://www.youtube.com/watch?v=G3JRv2dHU9A&feature=emb_rel_pause
