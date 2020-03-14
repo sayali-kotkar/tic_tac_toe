@@ -47,14 +47,14 @@ defmodule TicTacToe do
 
   def game_status(board) do
     cond do
-      isWinner(board, 1) ->
-        {:finished, {:won, :x}}
+      isWinner(board, "X") ->
+        {:finished, "X WINS !!!!", board}
 
-      isWinner(board, 0) ->
-        {:finished, {:won, :o}}
+      isWinner(board, "O") ->
+        {:finished, "O WINS !!!!", board}
 
       true ->
-        :playing
+        {:ok, board}
     end
   end
 
@@ -70,20 +70,29 @@ defmodule TicTacToe do
   # board format (set of maps , map --> (board_location, player_symbol_move))
   # [{%Cell{row:0 ,col: 0} => :empty}, %Cell{0,1}:empty,  %Square{0,2}:empty}]
   def make_move(game_id, board, cell_location, player) do
-    case board[cell_location] do
-      nil ->
-        {:error, :invalid_location, board}
+    cond do
+      isWinner(board, "X") ->
+        {:finished, "X WINS !!!!", board}
 
-      0 ->
-        {:error, :cell_already_occupied, board}
+      isWinner(board, "O") ->
+        {:finished, "O WINS !!!!", board}
 
-      1 ->
-        {:error, :cell_already_occupied, board}
+      true ->
+        case board[cell_location] do
+          nil ->
+            {:error, :invalid_location, board}
 
-      :empty ->
-        board = %{board | cell_location => player}
-        BoardState.add(game_id, board)
-        {:ok, board}
+          "X" ->
+            {:error, :cell_already_occupied, board}
+
+          "O" ->
+            {:error, :cell_already_occupied, board}
+
+          :empty ->
+            board = %{board | cell_location => player}
+            BoardState.add(game_id, board)
+            game_status(board)
+        end
     end
   end
 end
